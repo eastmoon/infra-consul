@@ -11,27 +11,32 @@ services:
       - "8600:8600"
     environment:
       - CONSUL_BIND_INTERFACE=eth0
+    volumes:
+      - ${APP_DIR}\server\center.json:/consul/config/server.json:ro
+      - ${CACHE_DIR}\certs:/consul/config/certs/:ro
     networks:
-      - service_network
+      - consul
 
   consul-node-1:
     image: hashicorp/consul
     container_name: consul-node-1_${PROJECT_NAME}
     environment:
       - CONSUL_BIND_INTERFACE=eth0
-    command: ["agent", "-retry-join=consul-center"]
+    volumes:
+     - ${APP_DIR}\server\node-1.json:/consul/config/server.json:ro
     networks:
-      - service_network
+      - consul
 
   consul-node-2:
     image: hashicorp/consul
     container_name: consul-node-2_${PROJECT_NAME}
     environment:
       - CONSUL_BIND_INTERFACE=eth0
-    command: ["agent", "-retry-join=consul-center"]
+    volumes:
+     - ${APP_DIR}\server\node-2.json:/consul/config/server.json:ro
     networks:
-      - service_network
+      - consul
 
 networks:
-  service_network:
+  consul:
     driver: bridge

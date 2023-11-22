@@ -143,10 +143,18 @@ goto end
     echo Current Environment %PROJECT_ENV%
     echo PROJECT_NAME=%PROJECT_NAME% > %CONF_FILE_PATH%
 
-    @rem create cache
-    IF NOT EXIST cache (
-        mkdir cache
+    @rem Setting ocelot project and cache directory
+    set TARGET_DIR=%CLI_DIRECTORY%\cache
+    IF NOT EXIST %TARGET_DIR% (
+        mkdir %TARGET_DIR%
     )
+    echo CACHE_DIR=%TARGET_DIR% >> %CONF_FILE_PATH%
+
+    set TARGET_DIR=%CLI_DIRECTORY%\app
+    IF NOT EXIST %TARGET_DIR% (
+        mkdir %TARGET_DIR%
+    )
+    echo APP_DIR=%TARGET_DIR% >> %CONF_FILE_PATH%
     goto end
 
 @rem ------------------- Command "up" method -------------------
