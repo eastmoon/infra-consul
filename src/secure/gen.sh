@@ -22,7 +22,7 @@ consul tls cert create -server -dc dc1
 cat << EOF > /app/cache/config/tls-server.json
 {
   "tls": {
-    defaults: {
+    "defaults": {
       "ca_file": "/consul/certs/consul-agent-ca.pem",
       "cert_file": "/consul/certs/dc1-server-consul-0.pem",
       "key_file": "/consul/certs/dc1-server-consul-0-key.pem",
@@ -42,7 +42,7 @@ EOF
 cat << EOF > /app/cache/config/tls-client.json
 {
   "tls": {
-    defaults: {
+    "defaults": {
       "ca_file": "/consul/certs/consul-agent-ca.pem",
       "verify_incoming": false,
       "verify_outgoing": true,
