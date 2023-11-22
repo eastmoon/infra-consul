@@ -18,14 +18,27 @@ The core Consul workflow consists of the following stages:
 + ```cli dev```：單一容器啟動，用於開發與試驗
 + ```cli up```：叢集主機啟動
 + ```cli down```：叢集主機關閉
++ ```cli secure```：產生加密所需資訊與設定
++ ```cli into --<service-main-name>```：進入指定容器
++ ```cli logs --<service-main-name>```：顯示指定容器歷程
 
 ## Server and Client
 
-### [encrypt](https://developer.hashicorp.com/consul/docs/agent/config/cli-flags#_encrypt)
+### [Gossip encrypt](https://developer.hashicorp.com/consul/tutorials/security/gossip-encryption-secure)
 
 使用 [Consul Keygen](https://developer.hashicorp.com/consul/commands/keygen) 指令產生一組 32-bytes 的 Base64-encoded，用於 Consul 網路的加密通訊。
 
 此值可透過 CLI 參數 ```-encrypt``` 或設定檔 ```encrypt``` 為 Key 來提供啟動的節點；在預設上可以不提供此一數值，但在產品環境則基於安全性必需設定。
+
+在本專案可以使用
+
+### [TLS encryption](https://developer.hashicorp.com/consul/tutorials/security/tls-encryption-secure)
+
+基於 Certificate Authority (CA) 的加密通訊，使用於 [TLS](https://zh.wikipedia.org/zh-tw/%E5%82%B3%E8%BC%B8%E5%B1%A4%E5%AE%89%E5%85%A8%E6%80%A7%E5%8D%94%E5%AE%9A)，諸如 HTTP(S) 的通訊即是使用此通訊加密。
+
+### [ACL](https://developer.hashicorp.com/consul/tutorials/security/access-control-setup-production)
+
+基於 [Access Control List](https://developer.hashicorp.com/consul/docs/security/acl#acl-documentation) 的加密通訊。
 
 ## service discovery
 

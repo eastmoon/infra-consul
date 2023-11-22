@@ -133,6 +133,7 @@ goto end
     echo      into              Into docker container by docker exec.
     echo      logs              Show docker container logs.
     echo      dev               Startup single container.
+    echo      secure            Generate secure inforamtion in cache.
     echo.
     echo Run 'cli [COMMAND] --help' for more information on a command.
     goto end
@@ -248,6 +249,30 @@ goto end
 :cli-logs-help
     echo This is a Command Line Interface with project %PROJECT_NAME%
     echo Show docker container logs.
+    echo.
+    echo Options:
+    echo      --help, -h        Show more information with UP Command.
+    goto end
+
+@rem ------------------- Command "secure" method -------------------
+
+:cli-secure
+    docker rm -f secure-consul-%PROJECT_NAME%
+    docker run -ti --rm ^
+        -v %CLI_DIRECTORY%\src\secure:/app ^
+        -v %CLI_DIRECTORY%\cache:/app/cache ^
+        -w /app ^
+        --user consul ^
+        --name secure-consul-%PROJECT_NAME% ^
+        hashicorp/consul sh gen.sh
+    goto end
+
+:cli-secure-args
+    goto end
+
+:cli-secure-help
+    echo This is a Command Line Interface with project %PROJECT_NAME%
+    echo Generate secure inforamtion in cache
     echo.
     echo Options:
     echo      --help, -h        Show more information with UP Command.
