@@ -1,0 +1,6 @@
+{
+  "node_name": "client-default",
+  "data_dir": "/consul/data",
+  "retry_join": ["consul-center"],
+  "encrypt": "Ty2ZhKXUQj2y4PP+gO7UhXKf3URxsPsLvj+7Dz5O3BU="
+}

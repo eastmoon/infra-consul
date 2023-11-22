@@ -37,6 +37,16 @@ services:
     networks:
       - consul
 
+  consul-client-1:
+    image: hashicorp/consul
+    container_name: consul-client-1_${PROJECT_NAME}
+    environment:
+      - CONSUL_BIND_INTERFACE=eth0
+    volumes:
+     - ${APP_DIR}\client\default.json:/consul/config/client.json:ro
+    networks:
+      - consul
+
 networks:
   consul:
     driver: bridge
