@@ -21,6 +21,12 @@ The core Consul workflow consists of the following stages:
 
 ## Server and Client
 
+### [encrypt](https://developer.hashicorp.com/consul/docs/agent/config/cli-flags#_encrypt)
+
+使用 [Consul Keygen](https://developer.hashicorp.com/consul/commands/keygen) 指令產生一組 32-bytes 的 Base64-encoded，用於 Consul 網路的加密通訊。
+
+此值可透過 CLI 參數 ```-encrypt``` 或設定檔 ```encrypt``` 為 Key 來提供啟動的節點；在預設上可以不提供此一數值，但在產品環境則基於安全性必需設定。
+
 ## service discovery
 
 ## health check
@@ -34,6 +40,8 @@ The core Consul workflow consists of the following stages:
     - [Consul Architecture](https://developer.hashicorp.com/consul/docs/architecture)
 + [Consul - Docker](https://hub.docker.com/_/consul)
     - [hashicorp/consul - Docker](https://hub.docker.com/r/hashicorp/consul)，1.16 之後版本發布於此。
+    - [Create a secure local Consul datacenter with Docker Compose](https://developer.hashicorp.com/consul/tutorials/docker/docker-compose-datacenter)
+        + [Agents Configuration File Reference](https://developer.hashicorp.com/consul/docs/agent/config/config-files)
 + 教學文章
     - [Consul 1.9 中文文档](https://yushuai-w.gitbook.io/consul/intro)
         + [Consul 1.4 中文文档](https://kingfree.gitbook.io/consul/)
