@@ -8,6 +8,5 @@
   "addresses": {
     "http": "0.0.0.0"
   },
-  "retry_join": ["consul-center"],
-  "encrypt": "Ty2ZhKXUQj2y4PP+gO7UhXKf3URxsPsLvj+7Dz5O3BU="
+  "retry_join": ["consul-center"]
 }

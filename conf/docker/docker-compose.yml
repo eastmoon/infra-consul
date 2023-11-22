@@ -12,7 +12,8 @@ services:
     environment:
       - CONSUL_BIND_INTERFACE=eth0
     volumes:
-      - ${APP_DIR}\server\center.json:/consul/config/server.json:ro
+      - ${APP_DIR}\server\center.json:/consul/config/agent.json:ro
+      - ${APP_DIR}\common\encrypt.json:/consul/config/encrypt.json:ro
       - ${CACHE_DIR}\certs:/consul/config/certs/:ro
     networks:
       - consul
@@ -23,7 +24,8 @@ services:
     environment:
       - CONSUL_BIND_INTERFACE=eth0
     volumes:
-     - ${APP_DIR}\server\node-1.json:/consul/config/server.json:ro
+     - ${APP_DIR}\server\node-1.json:/consul/config/agent.json:ro
+     - ${APP_DIR}\common\encrypt.json:/consul/config/encrypt.json:ro
     networks:
       - consul
 
@@ -33,7 +35,8 @@ services:
     environment:
       - CONSUL_BIND_INTERFACE=eth0
     volumes:
-     - ${APP_DIR}\server\node-2.json:/consul/config/server.json:ro
+     - ${APP_DIR}\server\node-2.json:/consul/config/agent.json:ro
+     - ${APP_DIR}\common\encrypt.json:/consul/config/encrypt.json:ro
     networks:
       - consul
 
@@ -43,7 +46,8 @@ services:
     environment:
       - CONSUL_BIND_INTERFACE=eth0
     volumes:
-     - ${APP_DIR}\client\default.json:/consul/config/client.json:ro
+     - ${APP_DIR}\client\default.json:/consul/config/agent.json:ro
+     - ${APP_DIR}\common\encrypt.json:/consul/config/encrypt.json:ro
     networks:
       - consul
 
