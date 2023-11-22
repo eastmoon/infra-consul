@@ -1,5 +1,5 @@
 {
-  "node_name": "node-2",
+  "node_name": "server-node-2",
   "server": true,
   "ui_config": {
     "enabled": false
@@ -8,5 +8,5 @@
   "addresses": {
     "http": "0.0.0.0"
   },
-  "retry_join": ["consul-center"]
+  "retry_join": ["consul-server-1"]
 }

@@ -1,12 +1,11 @@
 {
-  "node_name": "node-1",
+  "node_name": "server-node-1",
   "server": true,
   "ui_config": {
-    "enabled": false
+    "enabled": true
   },
   "data_dir": "/consul/data",
   "addresses": {
     "http": "0.0.0.0"
-  },
-  "retry_join": ["consul-center"]
+  }
 }

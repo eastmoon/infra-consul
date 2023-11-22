@@ -3,39 +3,39 @@
 
 version: "3"
 services:
-  consul-center:
+  consul-server-1:
     image: hashicorp/consul
-    container_name: consul-center_${PROJECT_NAME}
+    container_name: consul-server-1_${PROJECT_NAME}
     ports:
       - "8500:8500"
       - "8600:8600"
     environment:
       - CONSUL_BIND_INTERFACE=eth0
     volumes:
-      - ${APP_DIR}\server\center.json:/consul/config/agent.json:ro
+      - ${APP_DIR}\server\node-1.json:/consul/config/agent.json:ro
       - ${APP_DIR}\common\encrypt.json:/consul/config/encrypt.json:ro
       - ${CACHE_DIR}\certs:/consul/config/certs/:ro
     networks:
       - consul
 
-  consul-node-1:
+  consul-server-2:
     image: hashicorp/consul
-    container_name: consul-node-1_${PROJECT_NAME}
-    environment:
-      - CONSUL_BIND_INTERFACE=eth0
-    volumes:
-     - ${APP_DIR}\server\node-1.json:/consul/config/agent.json:ro
-     - ${APP_DIR}\common\encrypt.json:/consul/config/encrypt.json:ro
-    networks:
-      - consul
-
-  consul-node-2:
-    image: hashicorp/consul
-    container_name: consul-node-2_${PROJECT_NAME}
+    container_name: consul-server-2_${PROJECT_NAME}
     environment:
       - CONSUL_BIND_INTERFACE=eth0
     volumes:
      - ${APP_DIR}\server\node-2.json:/consul/config/agent.json:ro
+     - ${APP_DIR}\common\encrypt.json:/consul/config/encrypt.json:ro
+    networks:
+      - consul
+
+  consul-server-3:
+    image: hashicorp/consul
+    container_name: consul-server-3_${PROJECT_NAME}
+    environment:
+      - CONSUL_BIND_INTERFACE=eth0
+    volumes:
+     - ${APP_DIR}\server\node-3.json:/consul/config/agent.json:ro
      - ${APP_DIR}\common\encrypt.json:/consul/config/encrypt.json:ro
     networks:
       - consul
