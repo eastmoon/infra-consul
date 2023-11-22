@@ -1,5 +1,6 @@
 {
   "node_name": "client-default",
+  "server": false,
   "data_dir": "/consul/data",
-  "retry_join": ["consul-server-1"]
+  "retry_join": ["consul-server-1", "consule-server-2", "consule-server-3"]
 }
