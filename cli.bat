@@ -130,7 +130,9 @@ goto end
     echo Command:
     echo      up                Startup Server.
     echo      down              Close down Server.
-    echo      dev               Startup CSS cli environment.
+    echo      into              Into docker container by docker exec.
+    echo      logs              Show docker container logs.
+    echo      dev               Startup single container.
     echo.
     echo Run 'cli [COMMAND] --help' for more information on a command.
     goto end
@@ -201,6 +203,56 @@ goto end
     echo      --help, -h        Show more information with UP Command.
     goto end
 
+@rem ------------------- Command "into" method -------------------
+
+:cli-into
+    @rem Into docker container by docker exec
+    if defined INTO_CONTAINER (
+        docker exec -ti consul-%INTO_CONTAINER%_%PROJECT_NAME% sh
+    ) else (
+        echo choose target container with options.
+    )
+    goto end
+
+:cli-into-args
+    set COMMON_ARGS_KEY=%1
+    set COMMON_ARGS_VALUE=%2
+    set INTO_CONTAINER=%COMMON_ARGS_KEY:--=%
+    goto end
+
+:cli-into-help
+    echo This is a Command Line Interface with project %PROJECT_NAME%
+    echo Into docker container by docker exec.
+    echo.
+    echo Options:
+    echo      --help, -h        Show more information with UP Command.
+    goto end
+
+@rem ------------------- Command "logs" method -------------------
+
+:cli-logs
+    @rem Into docker container by docker exec
+    if defined INTO_CONTAINER (
+        docker logs -f consul-%INTO_CONTAINER%_%PROJECT_NAME%
+    ) else (
+        echo choose target container with options.
+    )
+    goto end
+
+:cli-logs-args
+    set COMMON_ARGS_KEY=%1
+    set COMMON_ARGS_VALUE=%2
+    set INTO_CONTAINER=%COMMON_ARGS_KEY:--=%
+    goto end
+
+:cli-logs-help
+    echo This is a Command Line Interface with project %PROJECT_NAME%
+    echo Show docker container logs.
+    echo.
+    echo Options:
+    echo      --help, -h        Show more information with UP Command.
+    goto end
+
 @rem ------------------- Command "dev" method -------------------
 
 :cli-dev
@@ -226,7 +278,7 @@ goto end
 
 :cli-dev-help
     echo This is a Command Line Interface with project %PROJECT_NAME%
-    echo Startup CSS cli environment
+    echo Startup single container
     echo.
     echo Options:
     echo      --help, -h        Show more information with UP Command.
