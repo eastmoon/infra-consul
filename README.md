@@ -12,7 +12,6 @@ The core Consul workflow consists of the following stages:
 + Query: Consul’s identity-based DNS lets you find healthy services in the Consul catalog.
 + Secure: After services locate upstreams, Consul ensures that service-to-service communication is authenticated, authorized, and encrypted.
 
-
 ## 指令
 
 + ```cli dev```：單一容器啟動，用於開發與試驗
@@ -23,6 +22,21 @@ The core Consul workflow consists of the following stages:
 + ```cli logs --<service-main-name>```：顯示指定容器歷程
 
 ## Server and Client
+
++ [Agents Overview](https://developer.hashicorp.com/consul/docs/agent)
++ [The Consul system – servers and clients](https://subscription.packtpub.com/book/cloud-and-networking/9781800202627/2/ch02lvl1sec03/the-consul-system-servers-and-clients)
+
+![](./doc/img/consul-architecture.png)
+
+Consul agent is the core process of Consul. The agent maintains membership information, registers services, runs checks, responds to queries, and more. The agent must run on every node that is part of a Consul cluster.
+
+Agents run in either client or server mode.
+
++ Server nodes are the core agent operations,  participate in the consensus quorum. The quorum is based on the Raft protocol, which provides strong consistency and availability in the case of failure. Server nodes should run on dedicated instances because they are more resource intensive than client nodes.
+
++ Client nodes are lightweight processes that make up the majority of the cluster. They interface with the server nodes for most operations and maintain very little state of their own. Clients run on every node where services are running.
+
+基於安全性考量，Consul 建議設定以下的加密機制以確保服務間的通訊安全。
 
 ### [Gossip encrypt](https://developer.hashicorp.com/consul/tutorials/security/gossip-encryption-secure)
 
@@ -42,9 +56,24 @@ The core Consul workflow consists of the following stages:
 
 ## service discovery
 
-## health check
++ [Register external services with Consul service discovery](https://developer.hashicorp.com/consul/tutorials/developer-discovery/service-registration-external-services)
+    + [Register your services to Consul](https://developer.hashicorp.com/consul/tutorials/get-started-vms/virtual-machine-gs-service-discovery)
++ [Services](https://developer.hashicorp.com/consul/docs/services/services)
+    + [Define services](https://developer.hashicorp.com/consul/docs/services/usage/define-services)
+    + [Define health checks](https://developer.hashicorp.com/consul/docs/services/usage/checks)
+        - [Checking service health status with Consul](https://codeblog.dotsandbrackets.com/consul-health-check/)
+    + [Register services and health checks](https://developer.hashicorp.com/consul/docs/services/usage/register-services-checks)
+        - [Service - Agent HTTP API](https://developer.hashicorp.com/consul/api-docs/agent/service)
 
-## key-value storage
+![](./doc/img/consul-registering-services.png)
+
+### Internal service
+
+### External service
+
+### health check
+
+### key-value storage
 
 ## 文獻
 
@@ -55,6 +84,8 @@ The core Consul workflow consists of the following stages:
     - [hashicorp/consul - Docker](https://hub.docker.com/r/hashicorp/consul)，1.16 之後版本發布於此。
     - [Create a secure local Consul datacenter with Docker Compose](https://developer.hashicorp.com/consul/tutorials/docker/docker-compose-datacenter)
         + [Agents Configuration File Reference](https://developer.hashicorp.com/consul/docs/agent/config/config-files)
+        + [Service Configuration File Reference](https://developer.hashicorp.com/consul/docs/services/configuration/services-configuration-reference)
+        + [Health check configuration reference](https://developer.hashicorp.com/consul/docs/services/configuration/checks-configuration-reference)
 + 教學文章
     - [Consul 1.9 中文文档](https://yushuai-w.gitbook.io/consul/intro)
         + [Consul 1.4 中文文档](https://kingfree.gitbook.io/consul/)
