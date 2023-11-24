@@ -38,7 +38,7 @@ Agents run in either client or server mode.
 
 基於安全性考量，Consul 建議設定以下的加密機制以確保服務間的通訊安全。
 
-### [Gossip encrypt](https://developer.hashicorp.com/consul/tutorials/security/gossip-encryption-secure)
+#### [Gossip encrypt](https://developer.hashicorp.com/consul/tutorials/security/gossip-encryption-secure)
 
 使用 [Consul Keygen](https://developer.hashicorp.com/consul/commands/keygen) 指令產生一組 32-bytes 的 Base64-encoded，用於 Consul 網路的加密通訊。
 
@@ -46,15 +46,15 @@ Agents run in either client or server mode.
 
 在本專案可以使用
 
-### [TLS encryption](https://developer.hashicorp.com/consul/tutorials/security/tls-encryption-secure)
+#### [TLS encryption](https://developer.hashicorp.com/consul/tutorials/security/tls-encryption-secure)
 
 基於 Certificate Authority (CA) 的加密通訊，使用於 [TLS](https://zh.wikipedia.org/zh-tw/%E5%82%B3%E8%BC%B8%E5%B1%A4%E5%AE%89%E5%85%A8%E6%80%A7%E5%8D%94%E5%AE%9A)，諸如 HTTP(S) 的通訊即是使用此通訊加密。
 
-### [ACL](https://developer.hashicorp.com/consul/tutorials/security/access-control-setup-production)
+#### [ACL](https://developer.hashicorp.com/consul/tutorials/security/access-control-setup-production)
 
 基於 [Access Control List](https://developer.hashicorp.com/consul/docs/security/acl#acl-documentation) 的加密通訊。
 
-## service discovery
+## Service discovery
 
 + [Register external services with Consul service discovery](https://developer.hashicorp.com/consul/tutorials/developer-discovery/service-registration-external-services)
     + [Register your services to Consul](https://developer.hashicorp.com/consul/tutorials/get-started-vms/virtual-machine-gs-service-discovery)
@@ -65,15 +65,28 @@ Agents run in either client or server mode.
     + [Register services and health checks](https://developer.hashicorp.com/consul/docs/services/usage/register-services-checks)
         - [Service - Agent HTTP API](https://developer.hashicorp.com/consul/api-docs/agent/service)
 
+A service is an entity in your network that performs a specialized operation or set of related operations. In many contexts, a service is software that you want to make available to users or other programs with access to your network.
+
+You can define and register services with Consul, which makes them discoverable to other services in the network. You can also define various types of health checks that perform several safety functions, such as allowing a web balancer to gracefully remove failing nodes and allowing a database to replace a failed secondary.
+
+![](./doc/img/consul-service-concept.png)
+
+You must tell Consul about the services deployed to your network if you want them to be discoverable. You can define services by two way:
+
++ Define in a configuration file.
++ Send the service definition parameters as a payload to the /agent/service/register API endpoint.
+
 ![](./doc/img/consul-registering-services.png)
 
-### Internal service
+在 Consul，服務可以分為內部 ( Internal ) 與外部 ( External ) 服務，因此，針對不同的服務來源需採用不同的狀態檢查機制。
 
-### External service
+#### Internal service
 
-### health check
+#### External service
 
-### key-value storage
+#### health check
+
+#### key-value storage
 
 ## 文獻
 
