@@ -10,10 +10,10 @@ cat << EOF > ~/cli-services.json
       "name": "internal-srv",
       "port": 80,
       "check": {
-        "name": "ping check",
-        "args": ["ping", "-c1", "consul-service-nginx"],
+        "name": "tcp to 80",
+        "tcp": "consul-service-nginx:80",
         "interval": "10s",
-        "status": "passing"
+        "timeout": "1s"
       }
     }
   ]
