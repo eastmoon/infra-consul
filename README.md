@@ -71,11 +71,6 @@ You can define and register services with Consul, which makes them discoverable 
 
 ![](./doc/img/consul-service-concept.png)
 
-
-![](./doc/img/consul-registering-services.png)
-
-在 Consul，服務可以分為內部 ( Internal ) 與外部 ( External ) 服務，因此，針對不同的服務來源需採用不同的狀態檢查機制。
-
 #### Register
 
 You must tell Consul about the services deployed to your network if you want them to be discoverable. You can define services by three way:
@@ -112,12 +107,12 @@ You must tell Consul about the services deployed to your network if you want the
 + 前往腳本目錄 ```cd src```
 + 執行腳本 ```sh ./register-service-with-cli.sh```
 
-此範例執行會出現如下錯誤 ```Unexpected response code: 400 (Invalid check: TTL must be > 0 for TTL checks)```，此項錯誤是目前已知的異常議題，因為 Consul 在檢查配置資訊時將其判斷為 TTL 模式導致錯誤。
+在範例執行中若設定為 Script 檢查會出現如下錯誤 ```Unexpected response code: 400 (Invalid check: TTL must be > 0 for TTL checks)```，此項錯誤是目前已知的異常議題，因為 Consul 在檢查配置資訊時將其判斷為 TTL 模式導致錯誤。
 
 + [Get error: Unexpected response code: 400 (Invalid check: TTL must be > 0 for TTL checks) when register service with args check](https://discuss.hashicorp.com/t/get-error-unexpected-response-code-400-invalid-check-ttl-must-be-0-for-ttl-checks-when-register-service-with-args-check/34215)
 + [Service UDP Check: TTL must be > 0 for TTL checks](https://github.com/hashicorp/consul/issues/14864)
 
-目前已知可使用 Configuration 與 API 替代此項服務註冊。
+目前已知可使用 Configuration 與 API 替代此項服務註冊，或更換為其他檢查機制。
 
 ##### API
 
@@ -130,23 +125,43 @@ You must tell Consul about the services deployed to your network if you want the
 + 執行註冊腳本 ```sh ./register-service-with-api.sh```
 + 執行資訊取回腳本 ```sh ./services-info.sh```
 
-#### Type
+#### Health check
+
+在 Consul 的系統架構中，Server 建構叢集架構以管理整體網路資訊，Client 則為對 Consul 存取資訊的端點，因此，多數服務會經由 Client 為端點對網路內容存取，然而，服務本身可在分為內部 ( Internal ) 與外部 ( External ) 服務，其本質差異是 Service 是否於 Client 為相同主機 ( 容器 )，此差異部分也可從對服務的狀態檢查機制看出。
+
+![](./doc/img/consul-registering-services.png)
+
+對於服務狀態檢查可以參考 [Define health checks](https://developer.hashicorp.com/consul/docs/services/usage/checks)、[Health check configuration reference](https://developer.hashicorp.com/consul/docs/services/configuration/checks-configuration-reference) 文獻，其中主要檢查的項目 ( 全部項目請參考文獻 ) 包括：
+
++ Script：執行本地的腳本檢查狀態，若腳本執行回傳 0 為通過、回傳 1 為警告、其他為失敗
++ HTTP：以 HTTP 協議檢查網址是否可執行，若回傳為 200 - 299 則為通過、回傳 429 為警告、其他為失敗
++ TCP：以 TCP 協議檢查目標位置與連結埠是否可通訊，若此連結埠可通訊則為通過、不可同訓則為失敗
++ UDP：以 UDP 協議檢查目標位置與連結埠是否可通訊，若此連結埠可通訊則為通過、不可同訓則為失敗
++ TTL：由服務軟體本身經由 API 匯報服務狀態自 Consul，除匯報告知的狀態外，若服務超過指定時間未更新狀態也視同失敗
++ gRPC：對啟動標準 gRPC 的軟體，對其路由進行狀態檢查
++ Docker：執行本地的 Docker 服務中的腳本以檢查狀態，檢查結過相同於 Script
 
 ##### Internal service
 
+內部服務指服務與 Client 為相同主機 ( 容器 )，若採用此架構，依據服務軟體本身特性，理論上前述所有檢核方式皆可使用，但其中使用如 Script、Docker、OSService 則更適用經由作業系統指令才能檢查狀態的目標，例如 Linux 主機中檢查 systemctl 指定的服務是否正常運行、記憶體是否使用過度、指定命令是否可執行等。
+
+對於內部服務對應為下列的目標的狀態檢查：
+
 + Shell
-+ Python Consul
 + Executable file
 
 ##### External service
 
-+ Nginx
-+ .NET Server
-+ Node.js Server
+外部服務指服務與 Client 為不相同主機 ( 容器 )，若採用此架構，其主要檢核方式必需透過網路，則主要為 HTTP、TCP、UDP、TTL、gRPC 等，無論是經由網路協定檢查其狀態 ( TCP、UDP ) 或經由服務更新其狀態 ( TTL )，只要網路能正常運行其服務則能夠檢查。
 
-#### health check
+對於外部服務對應為下列的目標的狀態檢查：
+
++ Web server ( e.g nginx )
++ FTP、DNS etc
 
 #### key-value storage
+
++ [Python client for Consul.io](https://python-consul.readthedocs.io/en/latest/)
 
 ## 文獻
 
