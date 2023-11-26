@@ -71,18 +71,78 @@ You can define and register services with Consul, which makes them discoverable 
 
 ![](./doc/img/consul-service-concept.png)
 
-You must tell Consul about the services deployed to your network if you want them to be discoverable. You can define services by two way:
-
-+ Define in a configuration file.
-+ Send the service definition parameters as a payload to the /agent/service/register API endpoint.
 
 ![](./doc/img/consul-registering-services.png)
 
 在 Consul，服務可以分為內部 ( Internal ) 與外部 ( External ) 服務，因此，針對不同的服務來源需採用不同的狀態檢查機制。
 
-#### Internal service
+#### Register
 
-#### External service
+You must tell Consul about the services deployed to your network if you want them to be discoverable. You can define services by three way:
+
++ Define in a configuration file.
++ Register your service using the consul services command.
++ Send the service definition parameters as a payload to the /agent/service/register API endpoint.
+
+##### Configuration file
+
+使用配置檔，範例參考 [./app/client/default/services.json](service.json) 檔，詳細設定則參考文獻 [Services configuration reference](https://developer.hashicorp.com/consul/docs/services/configuration/services-configuration-reference)。
+
+```
+{
+  "services": [
+    {
+      "id": "srv1",
+      "name": "internal-srv",
+      ...
+    }
+  ]
+}
+```
+
+其主要設定檔句型結構如上，在此 ```services``` 的矩陣中設定不同 ```name```、```id``` 來註冊一個服務，在整個設定中，其主要是規劃註冊服務的網路通訊資訊，以及狀態檢查機制 ```check```。
+
+##### CLI
+
+使用指令介面，範例參考 [register-service-with-cli.sh](./src/client/register-service-with-cli.sh) 檔，操作文獻參考 [Consul Agent Services](https://developer.hashicorp.com/consul/commands/services)。
+
+範例使用操作如下：
+
++ 使用指令```cli.bat into --client-1``` 進入容器
++ 前往腳本目錄 ```cd src```
++ 執行腳本 ```sh ./register-service-with-cli.sh```
+
+此範例執行會出現如下錯誤 ```Unexpected response code: 400 (Invalid check: TTL must be > 0 for TTL checks)```，此項錯誤是目前已知的異常議題，因為 Consul 在檢查配置資訊時將其判斷為 TTL 模式導致錯誤。
+
++ [Get error: Unexpected response code: 400 (Invalid check: TTL must be > 0 for TTL checks) when register service with args check](https://discuss.hashicorp.com/t/get-error-unexpected-response-code-400-invalid-check-ttl-must-be-0-for-ttl-checks-when-register-service-with-args-check/34215)
++ [Service UDP Check: TTL must be > 0 for TTL checks](https://github.com/hashicorp/consul/issues/14864)
+
+目前已知可使用 Configuration 與 API 替代此項服務註冊。
+
+##### API
+
+使用指令介面，範例參考 [register-service-with-api.sh](./src/client/register-service-with-cli.sh) 檔，操作文獻參考 [Service - Agent HTTP API](https://developer.hashicorp.com/consul/api-docs/agent/service)。
+
+範例使用操作如下：
+
++ 使用指令```cli.bat into --client-1``` 進入容器
++ 前往腳本目錄 ```cd src```
++ 執行註冊腳本 ```sh ./register-service-with-api.sh```
++ 執行資訊取回腳本 ```sh ./services-info.sh```
+
+#### Type
+
+##### Internal service
+
++ Shell
++ Python Consul
++ Executable file
+
+##### External service
+
++ Nginx
++ .NET Server
++ Node.js Server
 
 #### health check
 

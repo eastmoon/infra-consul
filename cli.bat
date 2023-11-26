@@ -154,10 +154,10 @@ goto end
     echo CACHE_DIR=%TARGET_DIR% >> %CONF_FILE_PATH%
 
     set TARGET_DIR=%CLI_DIRECTORY%\app
-    IF NOT EXIST %TARGET_DIR% (
-        mkdir %TARGET_DIR%
-    )
     echo APP_DIR=%TARGET_DIR% >> %CONF_FILE_PATH%
+
+    set TARGET_DIR=%CLI_DIRECTORY%\src
+    echo SRC_DIR=%TARGET_DIR% >> %CONF_FILE_PATH%
     goto end
 
 @rem ------------------- Command "up" method -------------------
@@ -209,7 +209,7 @@ goto end
 :cli-into
     @rem Into docker container by docker exec
     if defined INTO_CONTAINER (
-        docker exec -ti consul-%INTO_CONTAINER%_%PROJECT_NAME% sh
+        docker exec -ti -w /consul consul-%INTO_CONTAINER%_%PROJECT_NAME% sh
     ) else (
         echo choose target container with options.
     )
