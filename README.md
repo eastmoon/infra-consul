@@ -121,7 +121,7 @@ You must tell Consul about the services deployed to your network if you want the
 
 ##### API
 
-使用指令介面，範例參考 [register-service-with-api.sh](./src/client/register-service-with-cli.sh) 檔，操作文獻參考 [Service - Agent HTTP API](https://developer.hashicorp.com/consul/api-docs/agent/service)。
+使用指令介面，範例參考 [register-service-with-api.sh](./src/client/register-service-with-api.sh) 檔，操作文獻參考 [Service - Agent HTTP API](https://developer.hashicorp.com/consul/api-docs/agent/service)。
 
 範例使用操作如下：
 
