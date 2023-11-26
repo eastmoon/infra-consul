@@ -5,7 +5,7 @@ set -e
 cat << EOF > ~/api-services.json
 {
   "id": "srv3",
-  "name": "internal-srv",
+  "name": "demo",
   "port": 80,
   "check": {
     "name": "ping check",

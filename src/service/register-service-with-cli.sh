@@ -7,7 +7,7 @@ cat << EOF > ~/cli-services.json
   "services": [
     {
       "id": "srv2",
-      "name": "internal-srv",
+      "name": "demo",
       "port": 80,
       "check": {
         "name": "tcp to 80",

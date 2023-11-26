@@ -51,7 +51,7 @@ services:
     environment:
       - CONSUL_BIND_INTERFACE=eth0
     volumes:
-      - ${SRC_DIR}\client:/consul/src:ro
+      - ${SRC_DIR}\service:/consul/src:ro
       - ${APP_DIR}\client\default\agent.json:/consul/config/agent.json:ro
       - ${APP_DIR}\client\default\services.json:/consul/config/services.json:ro
       - ${CACHE_DIR}\config\encrypt.json:/consul/config/encrypt.json:ro
@@ -63,6 +63,15 @@ services:
   consul-service-nginx:
     image: nginx
     container_name: consul-service-nginx_${PROJECT_NAME}
+    networks:
+      - consul
+
+  consul-service-ttl:
+    image: bash
+    container_name: consul-service-ttl_${PROJECT_NAME}
+    volumes:
+      - ${SRC_DIR}\service:/consul/src:ro
+    command: ["tail","-f","/dev/null"]
     networks:
       - consul
 

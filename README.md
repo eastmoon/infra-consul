@@ -131,7 +131,7 @@ You must tell Consul about the services deployed to your network if you want the
 
 ![](./doc/img/consul-registering-services.png)
 
-對於服務狀態檢查可以參考 [Define health checks](https://developer.hashicorp.com/consul/docs/services/usage/checks)、[Health check configuration reference](https://developer.hashicorp.com/consul/docs/services/configuration/checks-configuration-reference) 文獻，其中主要檢查的項目 ( 全部項目請參考文獻 ) 包括：
+對於服務狀態檢查可以參考 [Define health checks](https://developer.hashicorp.com/consul/docs/services/usage/checks)、[Health check configuration reference](https://developer.hashicorp.com/consul/docs/services/configuration/checks-configuration-reference)、[Check - Agent HTTP API](https://developer.hashicorp.com/consul/api-docs/agent/check) 文獻，其中主要檢查的項目 ( 全部項目請參考文獻 ) 包括：
 
 + Script：執行本地的腳本檢查狀態，若腳本執行回傳 0 為通過、回傳 1 為警告、其他為失敗
 + HTTP：以 HTTP 協議檢查網址是否可執行，若回傳為 200 - 299 則為通過、回傳 429 為警告、其他為失敗
@@ -158,6 +158,17 @@ You must tell Consul about the services deployed to your network if you want the
 
 + Web server ( e.g nginx )
 + FTP、DNS etc
+
+###### TTL 範本
+
+新增兩個腳本以驗證服務主動更新狀態的 TTL 狀態檢查機制。
+
++ 使用指令```cli.bat into --service-ttl``` 進入容器
++ 前往腳本目錄 ```cd src```
++ 執行註冊腳本 ```sh ./services-ttl-register.sh```
++ 執行 TTL 狀態更新 ```sh ./services-ttl-update.sh```
+
+在執行過程中，可以經由 Consul 介面觀察不同 API 發送的狀態改變，最終因當最後一次更新超過指定等待時間而呈現服務錯誤。
 
 #### key-value storage
 
