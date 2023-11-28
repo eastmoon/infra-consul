@@ -172,7 +172,17 @@ You must tell Consul about the services deployed to your network if you want the
 
 #### key-value storage
 
-+ [Python client for Consul.io](https://python-consul.readthedocs.io/en/latest/)
++ [Key/Value (KV) Store Overview](https://developer.hashicorp.com/consul/docs/dynamic-app-config/kv)
+    - [kv - API](https://developer.hashicorp.com/consul/api-docs/kv)
+    - [kv - CLI](https://developer.hashicorp.com/consul/commands/kv/put)
+
+The /kv endpoints access Consul's simple key/value store, useful for storing service configuration or other metadata.
+
+
+#### Exec
+
++ [Consul Exec](https://developer.hashicorp.com/consul/commands/exec)
++ [Consul exec is a whole lot of fun.](https://blog.froese.org/2014/12/12/abusing-consul-exec-just-because/)
 
 ## 文獻
 
@@ -185,6 +195,9 @@ You must tell Consul about the services deployed to your network if you want the
         + [Agents Configuration File Reference](https://developer.hashicorp.com/consul/docs/agent/config/config-files)
         + [Service Configuration File Reference](https://developer.hashicorp.com/consul/docs/services/configuration/services-configuration-reference)
         + [Health check configuration reference](https://developer.hashicorp.com/consul/docs/services/configuration/checks-configuration-reference)
++ Library
+    - [Python client for Consul.io](https://python-consul.readthedocs.io/en/latest/)
+    - [Ppconsul - C++ client for Consul](https://github.com/oliora/ppconsul)
 + 教學文章
     - [Consul 1.9 中文文档](https://yushuai-w.gitbook.io/consul/intro)
         + [Consul 1.4 中文文档](https://kingfree.gitbook.io/consul/)
@@ -195,3 +208,4 @@ You must tell Consul about the services deployed to your network if you want the
     - [基于Consul的服务发现](https://yunlzheng.gitbook.io/prometheus-book/part-ii-prometheus-jin-jie/sd/service-discovery-with-consul)
     - [使用Consul做服務發現的若幹姿勢](https://www.zendei.com/article/60622.html)
     - [使用 consul 及 nomad 建立起 dc 的基礎建設](https://poyu677.medium.com/8c4a8bedcd3f)
+    - [取得 Consul 中的 kv 值](https://blog.yowko.com/consul-kv-without-encoding/)
