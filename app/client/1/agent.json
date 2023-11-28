@@ -1,0 +1,9 @@
+{
+  "node_name": "client-1",
+  "server": false,
+  "data_dir": "/consul/data",
+  "retry_join": ["consul-server-1", "consule-server-2", "consule-server-3"],
+  "enable_local_script_checks": true,
+  "enable_script_checks": true,
+  "disable_remote_exec": false
+}

@@ -1,0 +1,15 @@
+{
+  "services": [
+    {
+      "id": "srv1",
+      "name": "demo",
+      "port": 80,
+      "check": {
+        "name": "ping check",
+        "args": ["ping", "-c1", "consul-service-nginx"],
+        "interval": "30s",
+        "status": "passing"
+      }
+    }
+  ]
+}

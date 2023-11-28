@@ -170,7 +170,7 @@ You must tell Consul about the services deployed to your network if you want the
 
 在執行過程中，可以經由 Consul 介面觀察不同 API 發送的狀態改變，最終因當最後一次更新超過指定等待時間而呈現服務錯誤。
 
-#### key-value storage
+## key-value storage
 
 + [Key/Value (KV) Store Overview](https://developer.hashicorp.com/consul/docs/dynamic-app-config/kv)
     - [kv - API](https://developer.hashicorp.com/consul/api-docs/kv)
@@ -184,10 +184,20 @@ The /kv endpoints access Consul's simple key/value store, useful for storing ser
 + 前往腳本目錄 ```cd src```
 + 執行腳本 ```sh ./kv.sh```
 
-#### Exec
+## Exec
 
 + [Consul Exec](https://developer.hashicorp.com/consul/commands/exec)
 + [Consul exec is a whole lot of fun.](https://blog.froese.org/2014/12/12/abusing-consul-exec-just-because/)
+
+The exec command provides a mechanism for remote execution. For example, this can be used to run the uptime command across all machines providing the web service.
+
+需注意，在 Consul 0.8 後遠程執行的預設為關閉，若要啟動需在設定中添加 ["disable_remote_exec": false](https://developer.hashicorp.com/consul/docs/agent/config/config-files#disable_remote_exec)。
+
+範例執行：
+
++ 使用指令```cli.bat into --client-1``` 進入容器
++ 前往腳本目錄 ```cd src```
++ 執行腳本 ```sh ./exec.sh```
 
 ## 文獻
 
