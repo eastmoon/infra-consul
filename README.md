@@ -199,6 +199,29 @@ The exec command provides a mechanism for remote execution. For example, this ca
 + 前往腳本目錄 ```cd src```
 + 執行腳本 ```sh ./exec.sh```
 
+## Watch & Event
+
++ [Watches Overview and Reference](https://developer.hashicorp.com/consul/docs/dynamic-app-config/watches)
+    - [Consul Watch - CLI](https://developer.hashicorp.com/consul/commands/watch)
++ Event
+    - [Consul Event - CLI](https://developer.hashicorp.com/consul/commands/event)
+    - [Consul Event - API](https://developer.hashicorp.com/consul/api-docs/event#fire-event)
++ [Consul example - events_watches_locks](https://github.com/JoergM/consul-examples/blob/master/events_watches_locks/README.md)
+
+Consul 的 Watch 是用來監看各類 Consul 資訊是否發生變化，其中包括 node、service、health check、key、event，而其中的 event 則是用戶使用 Consul event 的 CLI 或 API 發出的事件；在監控目標發生變化時，Watch 會執行 shell 參數指定的腳本 ( shell、python )。
+
+不過需要注意，Event 發出後的訊息若要讓腳本處理，需另外使用 event/list 的 API 來取回資訊後自行分析，其中發出的 Payload 另需使用 base64 解析才能看到正確資訊。
+
+範例執行：
+
++ 啟動一個命令模式並使用指令```cli.bat into --client-1``` 進入容器
++ 前往腳本目錄 ```cd src``` 並執行監看腳本 ```sh ./event-register.sh```
++ 啟動一個命令模式並使用指令```cli.bat into --client-2``` 進入容器
++ 前往腳本目錄 ```cd src``` 並執行觸發腳本 ```sh ./event-trigger.sh```
++ 觸發的事件資訊會透過 Consul 發給監看者並觸發執行訊息解析
+
+實測透過建立第三 Consule Client，兩個監看、一個發送，可以觀察到發送的訊息會同時讓兩個監看都被觸發處理腳本。
+
 ## 文獻
 
 + [Consul](https://www.consul.io/)
@@ -216,6 +239,7 @@ The exec command provides a mechanism for remote execution. For example, this ca
 + 教學文章
     - [Consul 1.9 中文文档](https://yushuai-w.gitbook.io/consul/intro)
         + [Consul 1.4 中文文档](https://kingfree.gitbook.io/consul/)
+    - [Consul - Quick Guide](https://www.tutorialspoint.com/consul/consul_quick_guide.htm)
     - [Introduction to Consul Made Simple](https://reemishirsath.medium.com/introduction-to-consul-made-simple-5749b79e1)
     - [使用 Consul 作為成員資格提供者](https://learn.microsoft.com/zh-tw/dotnet/orleans/deployment/consul-deployment)
     - [HashiCorp釋出多雲服務平臺Consul 1.9版，強化存取控制與視覺化功能](https://www.ithome.com.tw/news/141383)
@@ -224,3 +248,4 @@ The exec command provides a mechanism for remote execution. For example, this ca
     - [使用Consul做服務發現的若幹姿勢](https://www.zendei.com/article/60622.html)
     - [使用 consul 及 nomad 建立起 dc 的基礎建設](https://poyu677.medium.com/8c4a8bedcd3f)
     - [取得 Consul 中的 kv 值](https://blog.yowko.com/consul-kv-without-encoding/)
+    - [Consul 的事件系统](https://cloud.tencent.com/developer/article/2267711?areaId=106001)

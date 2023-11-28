@@ -75,6 +75,20 @@ services:
     networks:
       - consul
 
+  consul-client-3:
+    image: hashicorp/consul
+    container_name: consul-client-3_${PROJECT_NAME}
+    environment:
+      - CONSUL_BIND_INTERFACE=eth0
+    volumes:
+      - ${SRC_DIR}\service:/consul/src:ro
+      - ${APP_DIR}\client\3\agent.json:/consul/config/agent.json:ro
+      - ${CACHE_DIR}\config\encrypt.json:/consul/config/encrypt.json:ro
+      - ${CACHE_DIR}\config\tls-client.json:/consul/config/tls.json:ro
+      - ${CACHE_DIR}\certs:/consul/certs/:ro
+    networks:
+      - consul
+
   consul-service-nginx:
     image: nginx
     container_name: consul-service-nginx_${PROJECT_NAME}
