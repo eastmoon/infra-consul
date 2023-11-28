@@ -178,6 +178,11 @@ You must tell Consul about the services deployed to your network if you want the
 
 The /kv endpoints access Consul's simple key/value store, useful for storing service configuration or other metadata.
 
+範例執行：
+
++ 使用指令```cli.bat into --client-1``` 進入容器
++ 前往腳本目錄 ```cd src```
++ 執行腳本 ```sh ./kv.sh```
 
 #### Exec
 
